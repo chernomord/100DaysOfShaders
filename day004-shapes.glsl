@@ -23,10 +23,11 @@ float rect(in vec2 st, in vec4 offsets) {
 
 void mainImage(out vec4 fragColor, in vec2 fragCoord ){
     vec2 st = fragCoord.xy/iResolution.xy;
+    vec2 ms = iMouse.xy/iResolution.xy;
     vec3 color = vec3(0.0);
 
     color = vec3(
-        rect(st, vec4(.1,.2,.1,.1)) + 
+        rect(st, vec4(ms.x,ms.y,.1,.1)) + 
         rect(st, vec4(.4,.1,.3,.6))
         );
 
