@@ -2,7 +2,8 @@
 precision mediump float;
 #endif
 
-#define PI=3.14
+#define TWO_PI 6.28318530718
+
 
 float dfCircle(in vec2 st, in vec2 center, float r) {
     float pct = 0.;
@@ -11,22 +12,40 @@ float dfCircle(in vec2 st, in vec2 center, float r) {
     return pct;
 }
 
-float beat2(in float stT) {
-    return sqrt(stT*(2.-2.*stT));
+vec2 pCenter(in float shift) {
+    float stT = fract(iTime);
+    float beat = sqrt((stT+shift) * (2. - 2. * (stT+shift)));
+    return vec2(.5, beat/2. +.2);
 }
 
 void mainImage(out vec4 fragColor, in vec2 fragCoord ){
     vec2 st = fragCoord.xy/iResolution.xy;
     float stT = fract(iTime);
-    vec3 color = vec3(1.0, .3,.3);
+    vec2 center = pCenter(0.);
+    vec3 pColor = vec3(0.0);
 
     float rad = .3;
 
-    vec2 center = vec2(.5, beat2(stT)/2. +.2);
+    vec4 black = vec4(0.,0.,0.,1.);
 
-    color *=rad*2.;
+    vec4 color = vec4(1.,.2,.2, 1.);
 
-    color *= vec3(dfCircle(st, center, rad));
+    vec4 circle1 = vec4(color.rgb, dfCircle(st, pCenter(0.), rad));
+    vec4 circle2 = vec4(color.rgb, dfCircle(st, pCenter(-0.015), rad));
+    vec4 circle3 = vec4(color.rgb, dfCircle(st, pCenter(-0.03), rad));
 
-    fragColor = vec4(color,1.0);
+    color = vec4(
+        mix(
+            mix(
+            mix(
+            black,
+            circle1,
+            circle1.a),
+            circle2,
+            circle2.a/2.),
+            circle3,
+            circle3.a/3.)
+    );
+
+    fragColor = color;
 }
