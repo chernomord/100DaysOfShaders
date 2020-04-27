@@ -23,10 +23,10 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord ){
   proportion(st);
   vec3 color = vec3(0.0);
 
-  float shape1 = nShape(st, 3, vec2(0., 0.5));
+  float shape1 = nShape(st, 9, vec2(0., 0.));
   float shape2 = nShape(st, 4, vec2(0., 0.));
 
-  color = vec3(max(shape1, shape2));
+  color = vec3(shape1);
 
   fragColor = vec4(color, 1.0);
 }
