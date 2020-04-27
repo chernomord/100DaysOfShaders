@@ -43,8 +43,11 @@ vec4 nShape(in vec2 st, in vec2 c, in float tShift) {
 
 void mainImage(out vec4 fragColor, in vec2 fragCoord ) {
   vec2 st = fragCoord.xy/iResolution.xy;
+    st *= 3.;
+  st = fract(st);
   remap(st);
   proportion(st);
+
   // vec4 color = vec4(0.5,0.3,.5*sin(iTime*2.),1.);
   vec4 color = vec4(.1,.1,.1,1.);
 
@@ -55,7 +58,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord ) {
     vec4 shape = nShape(st, center, fract);
     shape.r*=sin(iTime + fract*20.);
     shape.g*=cos(iTime + fract*15.);
-    shape.g*=cos(iTime + fract*10.);
+    shape.b*=cos(iTime + fract*10.);
     color += shape;
     // color = mix(color, shape, shape.a);
   }
