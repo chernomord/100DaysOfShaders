@@ -46,7 +46,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord ) {
     float f_b = cos(p_ar_b[0]*8.0)/6. +.5;
     vec3 color = vec3( 
         smoothstep(f,f+0.2,p_ar_r[1]),
-        smoothstep(f,f+0.024,p_ar[1]+(sin(iTime*5.)+2.)/4.),
+        smoothstep(f,f+0.024,p_ar[1]*(sin(iTime*5.)+2.)/4.+(sin(iTime*5.)+2.)/4.),
         smoothstep(f,f+0.1,p_ar_b[1]) 
         );
 
